@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="icon" href="dist/img/favicon.png">
+    <title>Workstation Analysis</title>
+    <meta name="description" content="This is the Jinja2 Template for Workstation Analysis">
+    <meta name="author" content="Andrew Valenski, Geographic Technologies Group">
+    <meta name="copyright" content="Geographic Technologies Group">
+    <link href="https://fonts.googleapis.com/css?family=Krub:200,300,400,600" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.17.6/clusterize.min.css">
+    <link rel="stylesheet" href="dist/css/main.css">
+</head>
+
+<body>
+    <div id="grandparentBackground" class="abs contrast-dark"></div>
+    <button id="resizeButton" class="abs font-lightest font-small" onclick="openWin()">Resize</button>
+    <section id="parentContainer" class="abs">
+        <div id="idBanner" class="container primary abs">
+            <h1 id="machineName">{{machineName}}</h1>
+            <h2 id="subBannerText">{{orgName}}</h2>
+        </div>
+        <div id="infoBanner" class="container primary abs line-height-none">
+            <h2>Workstation </h2>
+            <h2>Analysis</h2>
+        </div>
+        <div id="dateBanner" class="container secondary abs font-heavy font-small text-center">
+            <p id="testDate">{{analysisDate}}</p>
+        </div>
+        <div id="userBanner" class="container secondary abs font-heavy font-small text-center">
+            <p id="testUser">{{analysisUser}}</p>
+        </div>
+        <div id="computerContainer" class="container abs tertiary-dark">
+            <div id="machineLogo" class="margin-center">
+            <img src="dist/img/windows-logo.png" alt="Windows 2012 Logo" height=120 width=181>
+        </div>
+            <div id="osRibbon" class="abs primary text-center">
+                <p class="paddedText font-small font-heavy text-center padding-none">
+                    <span id="osName">{{machineOS}}</span> <span id="osVersion">{{machineOSVersion}}</span><br>
+                    <span id="processorNamee">{{machineProcessor}}</span>
+                </p>
+            </div>
+            <div id="machineList" class="machineInfoContainer abs">
+                <p class="paddedText2 font-small text-center">
+                    <strong>IP Address</strong>
+                    <br>
+                    <span id="machineIP">{{machineIP}}</span>
+                    <br>
+                    <strong>Machine Name</strong>
+                    <br>
+                    <span id="machineName">{{machineName}}</span>
+                    <br>
+                    <strong>FQDN</strong>
+                    <br>
+                    <span id="machineFQDN">{{machineFQDN}}</span>
+                </p>
+            </div>
+            <div id="machineUserContainer" class="machineInfoContainer abs">
+                    <p class="paddedText2 font-small text-center">
+                            <strong>Machine User</strong>
+                            <br>
+                            <span id="machineUser">{{machineOwner}}</span>
+                            <br>
+                            <strong>Organization</strong>
+                            <br>
+                            <span id="machineName">{{orgName}}</span>
+                            <br>
+                            <strong>Point of Contact</strong>
+                            <br>
+                            <span id="machineFQDN">{{orgPOC}}</span>
+                        </p>
+            </div>
+        </div>
+        <div id="testInfoContainer" class="container abs font-small font-average tertiary">
+            <div id="gtgLogo">
+            <img src="dist/img/wa-logo.png" alt="Workstation Analyzer Logo" height=52 width=54>
+            </div>
+            <div id="testInformation">
+                <p>This workstation analysis was performed by <span id="tester">{{analysisUser}}</span> for <span id="testReason">{{analysisReason}}</span>
+                    purposes. The analysis was run on <span id="testDateTime">{{analysisDate}}</span> on <span id="testOrgName">{{orgName}}</span>'s
+                    infrastructure. This analysis is intended to serve as a general benchmark for workstation
+                    performance and status. Contact <a href="https://geotg.com/" target="_blank">GTG</a> for more info.
+                </p>
+            </div>
+        </div>
+        <div id="networkTestContainer" class="container abs light">
+            <div id="networkTestEndpoint" class="primary abs">
+                <h3 id="testingEndpoint" class="text-center">{{googleEndpoint}}</h3>
+            </div>
+            <div id="networkTestDetails" class="abs text-center">
+                <p class="networkHeadings">Resolving IP : </p>
+                <p id="resolvingIp" class="bold-font">{{googleIP}}</p>
+                <hr>
+                <p class="networkHeadings">Min Response Time : </p>
+                <p id="minResponseTime" class="bold-font">{{googleMinResponse}}</p>
+                <hr>
+                <p class="networkHeadings">Avg Response Time : </p>
+                <p id="avgResponseTime" class="bold-font">{{googleAvgResponse}}</p>
+                <hr>
+                <p class="networkHeadings">Max Response Time : </p>
+                <p id="maxResponseTime" class="bold-font">{{googleMaxResponse}}</p>
+            </div>
+            <div id="chartContainer" class="abs">
+                <canvas id="performanceChart" height="450px"></canvas>
+            </div>
+            <div id="networkButtonContainer" class="abs">
+                <button id="googleTestButton" class="networkButton activeButton" onclick="updateChart(this)">Google</button><!--
+                    --><button id="externalTestButton" class="networkButton" onclick="updateChart(this)">External</button><!--
+                    --><button id="lanTestButton" class="networkButton" onclick="updateChart(this)" >LAN</button><!--
+                    --><button id="wanTestButton" class="networkButton" onclick="updateChart(this)">WAN</button>
+            </div>
+        </div>
+        <div id="diskContainer" class="container abs performanceContainer">
+            <div id="diskLogo" class="performanceLogo abs">
+            <img src="dist/img/disk-icon.png" alt="Disk Space Icon" height=60 width=60 style="margin:auto;">
+        </div>
+        <div id="totalDiskContainer" class="performanceChartContainer abs">
+            <canvas id="diskChart" height="100px"></canvas>
+        </div>
+        <div id="diskUsageContainer" class="performanceTotalContainer text-center abs">
+            <p class="paddedText font-small font-heavy text-center padding-none">Total Storage (GBs)
+                <br>
+                <span id="totalStorage" class="font-xl font-heaviest">{{totalStorage}}</span> GBs
+            </p>
+        </div>
+        <div id="availableDiskContainer" class="performanceAvailableContainer text-center abs">
+            <p class="paddedText font-small font-heavy text-center padding-none">Remaining Storage
+                <br>
+                <span id="remainingStorage" class="font-xl font-heaviest">{{remainingStorage}}</span> GBs
+            </p>
+        </div>
+        </div>
+        <div id="cpuContainer" class="container abs performanceContainer">
+            <div id="cpuLogo"class="performanceLogo">
+                    <img src="dist/img/cpu-icon.png" alt="CPU Icon" height=60 width=60 style="margin:auto;"></div>
+            <div id="cpuUsageContainer" class="performanceChartContainer abs">
+            <canvas id="cpuChart" height="100px"></canvas>
+            </div>
+            <div id="cpuCoreContainer" class="performanceTotalContainer abs text-center">
+                <p class="paddedText font-small font-heavy text-center padding-none">Number of Cores
+                    <br>
+                    <span id="numberofCores" class="font-xl font-heaviest">{{cpuCount}}</span> Cores
+                </p>
+            </div>
+        </div>
+        <div id="ramContainer" class="container abs performanceContainer">
+            <div id="ramLogo" class="performanceLogo">
+                    <img src="dist/img/ram-icon.png" alt="RAM Icon" height=60 width=60 style="margin:auto;"></div>
+            <div id="ramUsageContainer" class="performanceChartContainer abs">
+                    <canvas id="ramChart" height="100px"></canvas>
+                </div>
+            <div id="totalRAMContainer" class="performanceTotalContainer abs text-center">
+                    <p class="paddedText font-small font-heavy text-center padding-none">Total System RAM (GBs)
+                            <br>
+                            <span id="totalRAM" class="font-xl font-heaviest">{{totalRAM}}</span> GB
+                        </p> 
+                </div>
+            <div id="availableRAMContainer" class="performanceAvailableContainer abs text-center">
+                    <p class="paddedText font-small font-heavy text-center padding-none"> Available RAM
+                            <br>
+                            <span id="availableRAM" class="font-xl font-heaviest">{{availableRAM}}</span> GB
+                        </p> 
+                </div>
+            </div>
+        </div>
+        <div id="additionalContainer" class="container abs secondary">
+            <div id="serviceTable" class="abs">
+                <h3 class="line-height-none text-center">Services</h3>
+                <div class="clusterize">
+                    <div id="serviceTableScroll" class="clusterize-scroll">
+                        <table>
+                                <thead>
+                                        <tr>
+                                            <th>Service</th>
+                                            <th>Status</th>
+                                            <th>User</th>
+                                        </tr>
+                                    </thead>
+                            <tbody id="serviceTableArea" class="clusterize-content">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="connectedUserTable" class="abs">
+                <h3 class="text-center line-height-none">Connected Users</h3>
+                <div class="clusterize">
+                        <div id="userTableScroll" class="clusterize-scroll">
+                            <table>
+                                <tbody id="userTableArea" class="clusterize-content">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+            <div id="networkTable" class="abs">
+                    <h3 class="line-height-none text-center">Available Networks</h3>
+                    <div class="clusterize">
+                            <div id="networkTableScroll" class="clusterize-scroll">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Network</th>
+                                            <th>Errors</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="networkTableArea" class="clusterize-content">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            </div>
+        </div>
+        <div id="descriptionContainer" class="container abs text-center">
+            <h4 id="testOrgName">{{orgName}}</h4>
+            <p class="font-small">
+                is a <span>{{orgType}}</span> that has around <span>{{orgSize}}</span> employees. For more information, contact <span>{{orgPOC}}</span>.
+            </p>
+        </div>
+        <div id="footer" class="abs light"></div>
+        <div id="accentMain" class="abs primary"></div>
+        <div id="boxyAccent" class="abs tertiary"></div>
+        <div id="miniAccent" class="abs tertiary-dark"></div>
+    </section>
+    <!-- Script Section -->
+    <script>
+        var reportWindow;
+        function openWin() {
+            reportWindow = window.open("index.html", "", "width=850, height=1100");
+            window.close();
+        }
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.5.0"></script>
+    <script>
+        // Global Variables : These store local JSON data for loading and
+        // responsiveness without needing to make external calls to the 
+        // JSON file.
+        const None = null;
+        const networkTestResults = {{networkTestResults}};
+        var googleTestResults;
+        var externalTestResults;
+        var lanTestResults;
+        var wanTestResults;
+        for(i=0; i < networkTestResults.length; i++){
+            if (networkTestResults[i]['type'] == 'google'){
+                if(networkTestResults[i]['endpoint'] == null){
+                    googleTestResults = null;
+                }
+                else{
+                    googleTestResults = {
+                        endpoint : networkTestResults[i]['endpoint'],
+                        resolvingIp : networkTestResults[i]['results']['resolvingIp'],
+                        failedPercent : networkTestResults[i]['results']['pingFailurePercent'],
+                        min : networkTestResults[i]['results']['minResponseTime'], 
+                        avg : networkTestResults[i]['results']['avgResponseTime'], 
+                        max : networkTestResults[i]['results']['maxResponseTime'] 
+                    }
+                }
+            }
+            if (networkTestResults[i]['type'] == 'external'){
+                if(networkTestResults[i]['endpoint'] == null){
+                    externalTestResults = null;
+                }
+                else{
+                    externalTestResults = {
+                        endpoint : networkTestResults[i]['endpoint'],
+                        resolvingIp : networkTestResults[i]['results']['resolvingIp'],
+                        failedPercent : networkTestResults[i]['results']['pingFailurePercent'],
+                        min : networkTestResults[i]['results']['minResponseTime'], 
+                        avg : networkTestResults[i]['results']['avgResponseTime'], 
+                        max : networkTestResults[i]['results']['maxResponseTime'] 
+                    }
+                }            }
+            if (networkTestResults[i]['type'] == 'lan'){
+                if(networkTestResults[i]['endpoint'] == null){
+                    lanTestResults = null;
+                    document.querySelector("#lanTestButton").setAttribute("disabled" , "true");
+                }
+                else{
+                    lanTestResults = {
+                        endpoint : networkTestResults[i]['endpoint'],
+                        resolvingIp : networkTestResults[i]['results']['resolvingIp'],
+                        failedPercent : networkTestResults[i]['results']['pingFailurePercent'],
+                        min : networkTestResults[i]['results']['minResponseTime'], 
+                        avg : networkTestResults[i]['results']['avgResponseTime'], 
+                        max : networkTestResults[i]['results']['maxResponseTime'] 
+                    }
+                } 
+            }
+            if (networkTestResults[i]['type'] == 'wan'){
+                if(networkTestResults[i]['endpoint'] == null){
+                    wanTestResults = null;
+                    document.querySelector("#wanTestButton").setAttribute("disabled" , "true");
+                }
+                else{
+                    wanTestResults = {
+                        endpoint : networkTestResults[i]['endpoint'],
+                        resolvingIp : networkTestResults[i]['results']['resolvingIp'],
+                        failedPercent : networkTestResults[i]['results']['pingFailurePercent'],
+                        min : networkTestResults[i]['results']['minResponseTime'], 
+                        avg : networkTestResults[i]['results']['avgResponseTime'], 
+                        max : networkTestResults[i]['results']['maxResponseTime'] 
+                    }
+                } 
+            }
+        }
+
+        // Resizing Function : The output HTML file is intentionally static. 
+        // This button will open a new window with the properly sized browser
+        // window.
+        var reportWindow;
+        function openWin() {
+            reportWindow = window.open("index.html", "", "width=850, height=1100");
+            window.close();
+        }
+
+        // Table Population Functions
+
+        // Charting Functions
+        // Create the 'Main' Chart showing the network speeds. By default this
+        // will load the google results since those will always exist.
+        var ctx = document.getElementById('performanceChart').getContext('2d');
+        var networkChart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                datasets: [{
+                    backgroundColor: ['#A7CAB1', '#88B7B5', '#DFB8CA'],
+                    borderColor: ['#A7CAB1', '#88B7B5', '#DFB8CA'],
+                    data: [googleTestResults['min'] , googleTestResults['avg'] , googleTestResults['max']],
+                }],
+                labels: ['Minimum', 'Average', 'Maximum']
+            },
+
+            // Configuration options go here
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    padding: 10,
+                    text: "Network Response Times",
+                    fontStyle: "bold"
+                },
+                tooltips: {
+                    displayColors: false
+                },
+                plugins: {
+                    datalabels: {
+                        color: '#310A31',
+                        anchor: 'end'
+                    }
+                },
+                scales : {
+                    yAxes: {
+                        ticks : {
+                            min: 0
+                        }
+                    }
+                }
+            }
+        });
+        var ctx2 = document.getElementById('diskChart').getContext('2d');
+        var diskChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: '%',
+                    backgroundColor: 'rgb(155, 199, 132)',
+                    borderColor: 'rgb(155, 199, 132)',
+                    data: [{{storageInUse}}],
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    displayColors: false
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                        ticks: {
+                            display: false 
+                        }
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min:0,
+                            max:100,
+                            display: false 
+                        }
+                    }]
+                },
+                maintainAspectRatio: false,
+                plugins: {
+                    datalabels: {
+                        color: '#F4ECD6',
+                        anchor: 'end'
+                    }
+                }
+            }
+        });
+        var ctx3 = document.getElementById('cpuChart').getContext('2d');
+        var cpuChart = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label : '%',
+                    backgroundColor: 'rgb(155, 199, 132)',
+                    borderColor: 'rgb(155, 199, 132)',
+                    data: [{{cpuInUse}}],
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    displayColors: false
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                        ticks: {
+                            display: false 
+                        }
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min:0,
+                            max:100,
+                            display: false 
+                        }
+                    }]
+                },
+                maintainAspectRatio: false,
+                plugins: {
+                    datalabels: {
+                        color: '#310A31',
+                        anchor: 'end'
+                    }
+                }
+            }
+        });
+        var ctx4 = document.getElementById('ramChart').getContext('2d');
+        var ramChart = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label : '%',
+                    backgroundColor: 'rgb(155, 199, 132)',
+                    borderColor: 'rgb(155, 199, 132)',
+                    data: [{{ramInUse}}],
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    displayColors: false
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                        ticks: {
+                            display: false 
+                        }
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min:0,
+                            max:100,
+                            display: false 
+                        }
+                    }]
+                },
+                maintainAspectRatio: false,
+                plugins: {
+                    datalabels: {
+                        color: '#F4ECD6',
+                        anchor: 'end'
+                    }
+                }
+            }
+        });
+
+        // Updating Function
+        // Updating Function
+        function updateConfigByMutating(chart, element) {
+            console.log(element.id);
+            if(element.id == "googleTestButton"){
+                chart.data.datasets[0].data = [googleTestResults['min'] , googleTestResults['avg'] , googleTestResults['max']];
+                document.querySelector("#networkTestEndpoint").innerHTML = googleTestResults["endpoint"];
+                document.querySelector("#resolvingIp").innerHTML = googleTestResults["resolvingIp"];
+                document.querySelector("#minResponseTime").innerHTML = googleTestResults["min"];
+                document.querySelector("#avgResponseTime").innerHTML = googleTestResults["avg"];
+                document.querySelector("#maxResponseTime").innerHTML = googleTestResults["max"];
+            }
+            else if(element.id == "externalTestButton"){
+                chart.data.datasets[0].data = [externalTestResults['min'] , externalTestResults['avg'] , externalTestResults['max']];
+                document.querySelector("#networkTestEndpoint").innerHTML = externalTestResults["endpoint"];
+                document.querySelector("#resolvingIp").innerHTML = externalTestResults["resolvingIp"];
+                document.querySelector("#minResponseTime").innerHTML = externalTestResults["min"];
+                document.querySelector("#avgResponseTime").innerHTML = externalTestResults["avg"];
+                document.querySelector("#maxResponseTime").innerHTML = externalTestResults["max"];
+            }
+            else if(element.id == "lanTestButton"){
+                chart.data.datasets[0].data = [lanTestResults['min'] , lanTestResults['avg'] , lanTestResults['max']];
+                document.querySelector("#networkTestEndpoint").innerHTML = lanTestResults["endpoint"];
+                document.querySelector("#resolvingIp").innerHTML(lanTestResults["resolvingIp"]);
+                document.querySelector("#minResponseTime").innerHTML = lanTestResults["min"];
+                document.querySelector("#avgResponseTime").innerHTML = lanTestResults["avg"];
+                document.querySelector("#maxResponseTime").innerHTML = lanTestResults["max"];
+            }
+            else if(element.id == "wanTestButton"){
+                chart.data.datasets[0].data = [wanTestResults['min'] , wanTestResults['avg'] , wanTestResults['max']];
+                document.querySelector("#networkTestEndpoint").innerHTML = wanTestResults["endpoint"];
+                document.querySelector("#resolvingIp").innerHTML = wanTestResults["resolvingIp"];
+                document.querySelector("#minResponseTime").innerHTML = wanTestResults["min"];
+                document.querySelector("#avgResponseTime").innerHTML = wanTestResults["avg"];
+                document.querySelector("#maxResponseTime").innerHTML = wanTestResults["max"];
+            }
+            chart.update();
+        }
+        // Updating Chart Data: When a user clicks on the buttons 
+        // under the chart, the chart should update to reflect
+        // this test's data.
+        function updateChart(element){
+            document.querySelector(".activeButton").classList.toggle("activeButton");
+            element.classList.toggle("activeButton");
+            console.log(element);
+            updateConfigByMutating(networkChart,element);
+        }
+
+        </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clusterize.js@0.18.1/clusterize.min.js"></script>
+    <script>
+        var serviceArray = {{windowsServices}};
+        // var networkArray = {{networkErrors}};
+        // var userArray = {{connectedUsers}}
+        var aRows1 = [];
+        for (var i = 0; i < serviceArray.length; i++) {
+            aRows1.push(`<tr><td>${serviceArray[i]['name']}</td><td>${serviceArray[i]['status']}</td><td>${serviceArray[i]['user']}</td></tr>`);
+        }
+        var aRows2 = [];
+        // for (var i = 0; i < userArray.length; i++) {
+        //     aRows2.push(`<tr><td>${userArray[i][0]}</td></tr>`);
+        // }
+        var aRows3 = [];
+        // for (var i = 0; i < networkArray.length; i++) {
+        //     aRows3.push(`<tr><td>${networkArray[i]['networkId']}</td><td>unknown</td></tr>`);
+        // }
+        var serviceCluster = new Clusterize({
+            rows: aRows1,
+            scrollId: 'serviceTableScroll',
+            contentId: 'serviceTableArea'
+        });
+        var userCluster = new Clusterize({
+            rows: aRows2,
+            scrollId: 'userTableScroll',
+            contentId: 'userTableArea'
+        });
+        var networkCluster = new Clusterize({
+            rows: aRows3,
+            scrollId: 'networkTableScroll',
+            contentId: 'networkTableArea'
+        });
+    </script>
+</body>
+
+</html>
