@@ -1,0 +1,492 @@
+.abs {
+    position:absolute;
+}
+
+.text-center{
+    text-align:center;
+}
+
+.margin-center{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.font-lightest{
+    font-weight:100;
+}
+
+.font-light{
+    font-weight:200;
+}
+
+.font-average{
+    font-weight:400;
+}
+
+.font-heavy{
+    font-weight:600;
+}
+
+.font-heaviest{
+    font-weight:700;
+}
+
+.networkButton {
+    background: #88b7b5;
+    font-weight:400;
+    letter-spacing:105%;
+    border: #cae8f1 3px solid;
+    transition: all .3s;
+    height:100%;
+    margin:0px;
+    width:25%;
+}
+.networkButton:hover{
+    filter:brightness(85%)
+}
+.activeButton{
+    background: #347976;
+    color:whitesmoke;
+    font-weight:600;
+    letter-spacing:.15rem;
+    border: #FEDBDC 3px solid;
+    border-top-color: #F4ECD6
+}
+.clusterize table {
+width: 100%;
+border-collapse: collapse;
+border-spacing: 0;
+overflow-y:scroll;
+height:50%;
+}
+.clusterize td {
+border: 1px solid #310A31;
+font-size: .75rem;
+}
+
+.clusterize th {
+background:#FEDBDC;
+border: 1px solid #310A31;
+font-weight:700;
+}
+
+.light{
+    background: #f4ecd6;
+    color: #110211;
+}
+
+.primary {
+background: #310A31;
+color:whitesmoke;
+}
+
+.secondary {
+background: #847996;
+color:#f5f5f5;
+}
+
+.tertiary{
+    background: #a7cab1;
+    color: #110211;
+}
+
+.tertiary-dark {
+    background: #88B7B5;
+    color: #110211;
+}
+
+.contrast {
+    background: #FEDBDC;
+    color: #110211;
+}
+
+.contrast-dark {
+    background: #73394A;
+    color: #f5f5f5;
+}
+
+.display-flex {
+    display:flex;
+}
+
+.margin-none{
+    margin: 0px 0px 0px 0px;
+}
+
+.margin-xs{
+    margin: 2px 2px 2px 2px;
+}
+
+.margin-small {
+    margin: 5px 5px 5px 5px;
+}
+
+.margin-normal{
+    margin:10px 10px 10px 10px;
+}
+
+.margin-large{
+    margin: 15px 15px 15px 15px;
+}
+
+.padding-none{
+    margin: 0px 0px 0px 0px;
+}
+
+.padding-xs{
+    margin: 2px 2px 2px 2px;
+}
+
+.padding-small {
+    padding: 5px 5px 5px 5px;
+}
+
+.padding-normal{
+    padding:10px 10px 10px 10px;
+}
+
+.padding-large{
+    padding: 15px 15px 15px 15px;
+}
+
+.font-xs{
+    font-size:0.75rem;
+}
+
+.font-small{
+    font-size:0.8rem;
+}
+
+.font-normal{
+    font-size:1rem;
+}
+
+.font-large{
+    font-size:1.25rem;
+}
+
+.font-xl{
+    font-size:1.5rem;
+}
+
+    html,body{
+        margin:0px;
+        padding:0px;
+        height:1100;
+        width:850;
+        font-family: 'Krub', sans-serif;
+        font-weight:200;
+        background: #fffcf5;
+        color: #110211
+    }
+    h1{
+        font-weight:600;
+        text-transform: uppercase;
+        font-size: 3rem;
+        line-height:50%;
+    }
+    .container{
+        padding:0px;
+    }
+    #resizeButton{
+        top:0;
+        left:0;
+        height:50px;
+        width:50px;
+        color:#f5f5f5;
+        background:#ff0077;
+        border:none;
+        border-radius:50%;
+        transition: all .5s;
+    }
+    #resizeButton:hover{
+        filter:brightness(90%);
+        transform:rotate(360deg) scale(1.25);
+    }
+    #parentContainer{
+        top:50px;
+        left:50px;
+        height:1000px;
+        width:750px;
+        overflow:hidden;
+        background:#cae8f1;
+    }
+    #grandparentBackground{
+        top:40px;
+        left:40px;
+        height:1020px;
+        width:770px;
+    }
+    #idBanner{
+        top:0;
+        left:0;
+        height:150px;
+        width:500px;
+        padding-left:10px;
+    }
+    #infoBanner{
+        left:525px;
+        top:15px;
+        height:60px;
+        width:225px;
+        text-transform: uppercase;
+        padding-left:5px;
+    }
+    #dateBanner{
+        top:90px;
+        left:525px;
+        height:45px;
+        width:75px;
+    }
+    #userBanner{
+        top:90px;
+        left:615px;
+        height:45px;
+        width:135px;
+    }
+    #computerContainer{
+        top:175px;
+        left:0px;
+        height:300px;
+        width:362.5px;
+    }
+    #testInfoContainer{
+        top:175px;
+        left: 387.5px;
+        height:150px;
+        width:362.5px;
+    }
+    #networkTestContainer{
+        top:350px;
+        left:387.5px;
+        height:400px;
+        width:362.5px;
+    }
+    .performanceContainer{
+        background:#563656;
+        color:#110211;
+    }
+    #diskContainer{
+        left:0px;
+        top: 485px;
+        height:80px;
+        width: 362.5px;
+    }
+    #cpuContainer{
+        top: 575px;
+        left:0px;
+        height:80px;
+        width: 362.5px;
+    }
+    #ramContainer{
+        top: 665px;
+        left:0px;
+        height:85px;
+        width: 362.5px;
+    }
+    #additionalContainer{
+        top:775px;
+        left:0px;
+        height:175px;
+        width:450px;
+        color: #110211;
+    }
+    #descriptionContainer{
+        top:775px;
+        left:475px;
+        height:175px;
+        width:180px;
+    }
+    #footer{
+        bottom:0px;
+        left:0px;
+        height:40px;
+        width:750px;
+    }
+    #accentMain{
+        bottom:-100px;
+        right:-150px;
+        height:300px;
+        width:250px;
+        transform:rotate(35deg);
+    }
+    #miniAccent{
+        bottom:-97.5px;
+        right:27.5px;
+        height:105px;
+        width:150px;
+        transform:rotate(35deg); 
+    }
+    #boxyAccent{
+        bottom:0px;
+        right:0px;
+        height:40px;
+        width:133px;
+    }
+    #subBannerText{
+        font-style:oblique;
+        color: #F4ECD6;
+    }
+
+    #machineLogo {
+        display:block;
+        margin-top:10px;
+        width:50%;
+        height:45%;
+    }
+
+    #osRibbon{
+        top:35%;
+        left:10%;
+        height:15%;
+        width:80%;
+        background-image: linear-gradient(to right, #310A3100 , #310A3150 , #310A31 , #310A31 ,  #310A31 , #310A3150 , #310A3100);
+    }
+
+    .paddedText {
+        margin: 2px 0 0 0;
+    }
+
+    .paddedText2 {
+        margin-top:2px;
+        padding: 2px 1px 2px 2px;
+    }
+
+    .machineInfoContainer {
+        height:45%;
+        width:45%;
+        margin: 10px 0 0 10px;
+        background:#F4ECD6;
+    }
+
+    #machineUserContainer{
+        left:50%;
+    }
+
+    #gtgLogo {
+        float:left;
+        height:35%;
+        width:15%;
+        margin: 10px 0px 10px 10px;
+    }
+
+    #testInformation{
+        margin: -7.5px 0px 15px 15px;
+    }
+
+    #networkTestEndpoint {
+        top:0;
+        left:0;
+        height:15%;
+        width:90%;
+        margin: 10px 2px 5% 5%;
+    }
+    #networkTestDetails{
+        top:17.5%;
+        left:0;
+        height:65%;
+        width:40%; 
+        margin: 10px 0px 0px 5%;
+        line-height:40%;
+        background:#bbb5c5;
+    }
+
+    .networkHeadings {
+        font-size: 0.75rem;
+        font-weight:600;
+    }
+
+    .bold-font{
+        font-weight:bold;
+    }
+
+    #chartContainer{
+        top:17.5%;
+        left:45%;
+        height:65%;
+        width:45%;
+        margin: 10px 2px 5% 5%;
+    }
+
+    #networkButtonContainer{
+        bottom:0;
+        left:0;
+        height:10%;
+        width:100%;
+    }
+
+    .performanceLogo{
+        display:flex;
+        height:87.5%;
+        width:20%;
+        margin: 5px 0px 0px 10px;
+    }
+
+    .performanceChartContainer{
+        display:flex;
+        top:0;
+        left:24%;
+        height:87.5%;
+        width:10%;
+        margin:5px 5px 0px 0px;
+    }
+
+    .performanceTotalContainer{
+        display:flex;
+        top:0;
+        left:35.25%;
+        height:87.5%;
+        width:30%;
+        margin: 5px 5px 0px 0px;
+        background:#faf6ec;
+    }
+
+    .performanceAvailableContainer {
+        display:flex;
+        top:0;
+        left:66.25%;
+        height:87.5%;
+        width:30%;
+        margin: 5px 5px 0px 0px;
+        background:#faf6ec;
+    }
+
+    #serviceTable{
+        height:95%;
+        width:50%;
+        margin: 5px 1px 0px 10px;
+    }
+
+    #serviceTableScroll {
+        height:125px;
+        background:#F4ECD6;
+    }
+
+    .line-height-none {
+        line-height:0%;
+    }
+
+    #connectedUserTable{
+        left:55.5%;
+        height:40%;
+        width:42.5%;
+        margin:5px 0px 0px 0px;
+    }
+
+    #userTableScroll {
+        height:25px;
+        background:#F4ECD6;
+    }
+
+    #networkTable{
+        top:45%;
+        left:55.5%;
+        height:50%;
+        width:42.5%;
+        margin:5px 0px 0px 0px;
+    }
+
+    #networkTableScroll{
+        height:45px;
+        background:#F4ECD6;
+    }
