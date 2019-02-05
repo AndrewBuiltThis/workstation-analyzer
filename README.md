@@ -2,7 +2,9 @@
 
 ### You are too smart to have to be dealing with users who can't tell you the information you need about their machines.
 
-### To quote my dad's favorite artist, 🎵"*times they are'a changin'*"🎵
+### To quote my dad's favorite artist, 🎵*times they are'a changin'*🎵
+
+![Workstation Analyzer Output](/workstation-analyzer.png?raw=true "Workstation Analyzer")
 
 This application was built for a simple purpose: to allow system administrators and analysts to get relevant information on a machine without needing to go back-and-forth with customers *and* to allow information to get collected in a programmatic and consistent manner. I extended this beyond a simple output (JSON) and used a Pythonic templating engine to create an interactive HTML report.
 
